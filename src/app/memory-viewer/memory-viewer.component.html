@@ -1,14 +1,16 @@
 <h1> Memory viewer </h1>
-<label *ngIf="!memEdit"> 
-  Follow PC ?
-  <input type="checkbox" [(ngModel)]="followPC"/> 
-</label>
-<br/>
-<label> 
-  Mem edit ?
-  <input type="checkbox" (click)="updateMem()" [(ngModel)]="memEdit"/> 
-</label>
-<button *ngIf="memEdit" (click)="saveMemEdits()"> Save edits </button>
+<div>
+  <div *ngIf="!memEdit">
+    <input type="checkbox" [(ngModel)]="followPC"/> 
+    <label> Follow PC ?  </label>
+  </div>
+  <div>
+    <input type="checkbox" (click)="updateMem()" [(ngModel)]="memEdit"/> 
+    <label> Mem edit ? </label>
+    <button *ngIf="memEdit" class="pull-right" (click)="saveMemEdits()"> Save edits </button>
+  </div>
+</div>
+
 <div *ngIf="!followPC && !memEdit">
     <label> 
         Start address : 
@@ -19,6 +21,7 @@
           <input type="number" [(ngModel)]="endAddress">
       </label>
 </div>
+
 
 <table *ngIf="!memEdit" class="table table-bordered">
    <tr>

@@ -33,6 +33,9 @@ export class OpCodeFetcher {
 
         this.opcodeMap[OpCodes.JPNN] = {params: 2, pcInc: 3, cycles: 12, template: 'JP #${1}${0}'};
         this.opcodeMap[OpCodes.JPZNN] = {params: 2, pcInc: 3, cycles: 12, template: 'JP Z, #${1}${0}'};
+        this.opcodeMap[OpCodes.JPNZNN] = {params: 2, pcInc: 3, cycles: 12, template: 'JP NZ, #${1}${0}'};
+        this.opcodeMap[OpCodes.JPNCNN] = {params: 2, pcInc: 3, cycles: 12, template: 'JP NC, #${1}${0}'};
+        this.opcodeMap[OpCodes.JPCNN] = {params: 2, pcInc: 3, cycles: 12, template: 'JP C, #${1}${0}'};
 
         this.opcodeMap[OpCodes.LDBN] = {params: 1, pcInc: 2, cycles: 8, template: 'LD B, #${0}'};
         this.opcodeMap[OpCodes.LDA] = {params: 1, pcInc: 2, cycles: 8, template: 'LD A, #${0}'};

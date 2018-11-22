@@ -61,6 +61,39 @@ export class OpCodeExecutor {
             return opcodeParam.cycles;
         };
 
+        this.opcodeMap[OpCodes.JPNZNN] = (opcodeParam: OpcodeParam) => {
+            const lsb = opcodeParam.parameters[0];
+            const msb = opcodeParam.parameters[1];
+            if (registerHelper.readZF() === 0b0) {
+                registerHelper.setPC(this.toLittleEndianByte(lsb, msb));
+            } else {
+                registerHelper.incrementPC(opcodeParam.pcInc);
+            }
+            return opcodeParam.cycles;
+        };
+
+        this.opcodeMap[OpCodes.JPNCNN] = (opcodeParam: OpcodeParam) => {
+            const lsb = opcodeParam.parameters[0];
+            const msb = opcodeParam.parameters[1];
+            if (registerHelper.readCY() === 0b0) {
+                registerHelper.setPC(this.toLittleEndianByte(lsb, msb));
+            } else {
+                registerHelper.incrementPC(opcodeParam.pcInc);
+            }
+            return opcodeParam.cycles;
+        };
+
+        this.opcodeMap[OpCodes.JPCNN] = (opcodeParam: OpcodeParam) => {
+            const lsb = opcodeParam.parameters[0];
+            const msb = opcodeParam.parameters[1];
+            if (registerHelper.readCY() === 0b1) {
+                registerHelper.setPC(this.toLittleEndianByte(lsb, msb));
+            } else {
+                registerHelper.incrementPC(opcodeParam.pcInc);
+            }
+            return opcodeParam.cycles;
+        };
+
         this.opcodeMap[OpCodes.JPZN] = (opcodeParam: OpcodeParam) => {
             const destinationAddress = opcodeParam.parameters[0];
             if (registerHelper.readZF() === 0b1) {

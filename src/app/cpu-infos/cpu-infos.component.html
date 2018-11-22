@@ -1,0 +1,14 @@
+<h1> Registers status </h1>
+<table class="table table-bordered">
+  <tr>
+    <th>Register</th>
+    <th>Bin</th>
+    <th>Hex</th>
+  </tr>
+    <tr *ngFor="let register of hardwareService.getCpuRegisters()">
+      <td> {{register.name  | uppercase }}  </td>
+      <td> {{register.value | binaryPipe }} </td>
+      <td> {{register.value | hexPipe }} </td>
+    </tr>
+</table> 
+ 

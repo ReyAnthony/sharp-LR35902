@@ -1,0 +1,31 @@
+<h1> Memory viewer </h1>
+<label> 
+  Follow PC ?
+  <input type="checkbox" [(ngModel)]="followPC"/> 
+</label>
+<div *ngIf="!followPC">
+    <label> 
+        Start address : 
+        <input type="text" [(ngModel)]="startAddress">
+      </label>
+      <label> 
+          End address : 
+          <input type="text" [(ngModel)]="endAddress">
+      </label>
+</div>
+
+<table class="table table-bordered">
+   <tr>
+     <th> Addr </th>
+     <th> Hex </th>
+     <th> Bin </th>
+     <th> Instruction </th>
+   </tr>
+   <tr [ngClass]="{'success' : isPC(data.address)}" *ngFor="let data of getMemory()">
+     <td> {{ data.address | hexPipe }} </td>
+     <td> {{ data.value | hexPipe }} </td>
+     <td> {{ data.value | binaryPipe }} </td>
+     <td> {{ data.opcodeHumanReadable }} </td>
+   </tr>
+ </table> 
+

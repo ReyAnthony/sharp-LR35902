@@ -9,6 +9,7 @@ import { CpuInfosComponent } from './cpu-infos/cpu-infos.component';
 import { BinaryPipe } from './misc/pipes/binaryPipe';
 import { MemoryViewerComponent } from './memory-viewer/memory-viewer.component';
 import { HexPipe } from './misc/pipes/hexPipe';
+import { ProgramLoaderComponent } from './program-loader/program-loader.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { HexPipe } from './misc/pipes/hexPipe';
     CpuInfosComponent,
     BinaryPipe,
     HexPipe,
-    MemoryViewerComponent
+    MemoryViewerComponent,
+    ProgramLoaderComponent
   ],
   imports: [
     BrowserModule,

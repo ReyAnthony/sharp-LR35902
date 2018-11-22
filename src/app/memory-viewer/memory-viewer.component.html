@@ -1,31 +1,56 @@
 <h1> Memory viewer </h1>
-<label> 
+<label *ngIf="!memEdit"> 
   Follow PC ?
   <input type="checkbox" [(ngModel)]="followPC"/> 
 </label>
-<div *ngIf="!followPC">
+<br/>
+<label> 
+  Mem edit ?
+  <input type="checkbox" (click)="updateMem()" [(ngModel)]="memEdit"/> 
+</label>
+<button *ngIf="memEdit" (click)="saveMemEdits()"> Save edits </button>
+<div *ngIf="!followPC && !memEdit">
     <label> 
         Start address : 
-        <input type="text" [(ngModel)]="startAddress">
+        <input type="number" [(ngModel)]="startAddress">
       </label>
       <label> 
           End address : 
-          <input type="text" [(ngModel)]="endAddress">
+          <input type="number" [(ngModel)]="endAddress">
       </label>
 </div>
 
-<table class="table table-bordered">
+<table *ngIf="!memEdit" class="table table-bordered">
    <tr>
      <th> Addr </th>
      <th> Hex </th>
      <th> Bin </th>
+     <th> Dec </th>
      <th> Instruction </th>
    </tr>
    <tr [ngClass]="{'success' : isPC(data.address)}" *ngFor="let data of getMemory()">
      <td> {{ data.address | hexPipe }} </td>
      <td> {{ data.value | hexPipe }} </td>
      <td> {{ data.value | binaryPipe }} </td>
+     <td> {{ data.value  }} </td>
      <td> {{ data.opcodeHumanReadable }} </td>
    </tr>
  </table> 
+
+ <table *ngIf="memEdit" class="table table-bordered">
+  <tr>
+    <th> Addr </th>
+    <th> Hex </th>
+    <th> Bin </th>
+    <th> Instruction </th>
+    <th> Value </th>
+  </tr>
+  <tr [ngClass]="{'success' : isPC(data.address)}" *ngFor="let data of memoryCopy">
+    <td> {{ data.address | hexPipe }} </td>
+    <td> {{ data.value | hexPipe }} </td>
+    <td> {{ data.value | binaryPipe }} </td>
+    <td> {{ data.opcodeHumanReadable }} </td>
+    <td> <input type="number" [(ngModel)]="data.value"> </td>
+  </tr>
+</table> 
 

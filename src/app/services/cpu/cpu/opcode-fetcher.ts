@@ -9,7 +9,7 @@ interface OpcodeMeta {
 }
 export class OpCodeFetcher {
 
-    private opcodeMap: Map<number, OpcodeMeta> = new Map();
+    private opcodeMap: Map<Opcode, OpcodeMeta> = new Map();
 
     constructor(private memory: Memory) {
         this.opcodeMap[OpCodes.NOP] = {params: 0, pcInc: 1, cycles: 4, template: 'NOP'};

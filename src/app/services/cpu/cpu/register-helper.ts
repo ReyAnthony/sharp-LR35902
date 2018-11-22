@@ -4,7 +4,6 @@ import { CPU } from './cpu';
 // tslint:disable:no-bitwise
 export class RegisterHelper {
 
-    /* Gameboy is little endian but we'll implement it internally as big endian because it's less annoying..*/
     readonly ZF: number = 0;
     readonly N: number = 1;
     readonly H: number = 2;
@@ -56,6 +55,22 @@ export class RegisterHelper {
 
     getB(): number {
         return this.getHigherByte(this.cpu.bc);
+    }
+
+    getC(): number {
+        return this.getLowerByte(this.cpu.bc);
+    }
+
+    getD(): number {
+        return this.getHigherByte(this.cpu.de);
+    }
+
+    getE(): number {
+        return this.getLowerByte(this.cpu.de);
+    }
+
+    getF(): number {
+        return this.getLowerByte(this.cpu.af);
     }
 
     // INC

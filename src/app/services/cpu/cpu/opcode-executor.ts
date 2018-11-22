@@ -147,6 +147,5 @@ export class OpCodeExecutor {
             registerHelper.incrementPC(opcodeParam.pcInc);
             return opcodeParam.cycles;
         };
-
     }
 }

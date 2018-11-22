@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HardwareService } from '../services/cpu/hardware.service';
 
+type mappedMemory =  Array<{address: number, value: number, opcodeHumanReadable: string}>;
+
 @Component({
   selector: 'app-memory-viewer',
   templateUrl: './memory-viewer.component.html',
@@ -11,6 +13,8 @@ export class MemoryViewerComponent implements OnInit {
   startAddress = 0x100;
   endAddress = 0x100 + 15;
   followPC = false;
+  memEdit = false;
+  memoryCopy: mappedMemory;
 
   constructor(private hardwareService: HardwareService) { }
   ngOnInit() {
@@ -22,12 +26,23 @@ export class MemoryViewerComponent implements OnInit {
                       .value === address;
   }
 
-  getMemory(): Array<{address: number, value: number, opcodeHumanReadable: string}> {
+  getMemory(): mappedMemory {
     if (!this.followPC) {
       return this.hardwareService.getMemory(this.startAddress, this.endAddress);
     } else {
       return this.hardwareService.getMemory(this.getPC(), this.getPC() + 16);
     }
+  }
+
+  updateMem() {
+    this.memoryCopy = this.getMemory();
+  }
+
+  saveMemEdits() {
+    this.memoryCopy.forEach((e) => {
+      this.hardwareService.updateMemory(e.address, e.value);
+    });
+    this.memoryCopy = this.getMemory();
   }
 
   private getPC(): number {

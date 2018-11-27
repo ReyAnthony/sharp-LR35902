@@ -11,6 +11,7 @@ import { MemoryViewerComponent } from './memory-viewer/memory-viewer.component';
 import { HexPipe } from './misc/pipes/hexPipe';
 import { ProgramLoaderComponent } from './program-loader/program-loader.component';
 import { DocumentationComponent } from './documentation/documentation.component';
+import { AssemblerComponent } from './assembler/assembler.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { DocumentationComponent } from './documentation/documentation.component'
     HexPipe,
     MemoryViewerComponent,
     ProgramLoaderComponent,
-    DocumentationComponent
+    DocumentationComponent,
+    AssemblerComponent
   ],
   imports: [
     BrowserModule,

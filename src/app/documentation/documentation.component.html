@@ -4,7 +4,7 @@
 
 <label> 
     Filter : 
-    <input [(ngModel)]="filter" type="text"/> 
+    <input [(ngModel)]="documentationService.filter" type="text"/> 
 </label>
 
 <div *ngFor="let opcode of getFilteredOpcodes()">
@@ -12,19 +12,20 @@
   <table class="table table-bordered">
       <tr>
         <th>Opcode</th>
+        <th>Template</th>
         <th>Parameters</th>
         <th>Cycles</th>
         <th>PC incrementation</th>
       </tr>
       <tr>
         <td> {{opcode.code | hexPipe }} </td>
+        <td>{{opcode.template}}</td>
         <td>{{opcode.params}}</td>
         <td>{{opcode.cycles}}</td>
         <td>{{opcode.pcInc}}</td>
       </tr>
     </table> 
   <p> {{opcode.doc}} </p>
-  <p> Usage: {{opcode.template}}</p>
   <br/>
 </div>
 

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HardwareService } from '../services/cpu/hardware.service';
+import { ProgramLoaderService } from '../services/program-loader.service';
 
 @Component({
   selector: 'app-program-loader',
@@ -8,13 +9,12 @@ import { HardwareService } from '../services/cpu/hardware.service';
 })
 export class ProgramLoaderComponent implements OnInit {
 
-  program: string;
-  constructor(private hardwareService: HardwareService) { }
+  constructor(private hardwareService: HardwareService, private programLoaderService: ProgramLoaderService) { }
 
   ngOnInit() {
   }
 
   loadProgram() {
-    this.hardwareService.loadProgram(this.program.replace(/\s/g, '\n'));
+    this.hardwareService.loadProgram(this.programLoaderService.program.replace(/\s/g, '\n'));
   }
 }

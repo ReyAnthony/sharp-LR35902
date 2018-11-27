@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HardwareService } from '../services/cpu/hardware.service';
 import { OpcodeMeta, Opcode } from '../services/cpu/custom-types';
+import { DocumentationService } from '../services/documentation.service';
 
 @Component({
   selector: 'app-documentation',
@@ -9,10 +10,9 @@ import { OpcodeMeta, Opcode } from '../services/cpu/custom-types';
 })
 export class DocumentationComponent implements OnInit {
 
-  filter = '';
   private opcodes: Array<OpcodeMeta>;
 
-  constructor(private hardwareService: HardwareService) { }
+  constructor(private hardwareService: HardwareService, private documentationService: DocumentationService) { }
 
   ngOnInit() {
     this.opcodes = this.hardwareService.getOpcodes();
@@ -23,8 +23,8 @@ export class DocumentationComponent implements OnInit {
   }
 
   getFilteredOpcodes(): Array<OpcodeMeta> {
-    if (this.filter !== '' ) {
-      return this.opcodes.filter((o) => o.name.toLowerCase().includes(this.filter.toLowerCase()));
+    if (this.documentationService.filter !== '' ) {
+      return this.opcodes.filter((o) => o.name.toLowerCase().includes(this.documentationService.filter.toLowerCase()));
     }
     return this.opcodes;
   }

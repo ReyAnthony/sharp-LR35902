@@ -1,11 +1,13 @@
 <h1> Opcodes documentation </h1>
 
+<p> The processor has {{ getOpcodes().length }} opcodes implemented.</p> <br/>
+
 <label> 
     Filter : 
     <input [(ngModel)]="filter" type="text"/> 
 </label>
 
-<div *ngFor="let opcode of getOpcodes()">
+<div *ngFor="let opcode of getFilteredOpcodes()">
   <h2 id="{{opcode.code}}"> {{opcode.name}} </h2>
   <table class="table table-bordered">
       <tr>
@@ -26,7 +28,7 @@
   <br/>
 </div>
 
-<p *ngIf="getOpcodes().length === 0">
+<p *ngIf="getFilteredOpcodes().length === 0">
     <br/>
 
   Nothing to show ! Try using broader criterias. 

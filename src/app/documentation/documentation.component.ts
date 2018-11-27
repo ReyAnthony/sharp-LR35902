@@ -10,17 +10,22 @@ import { OpcodeMeta, Opcode } from '../services/cpu/custom-types';
 export class DocumentationComponent implements OnInit {
 
   filter = '';
+  private opcodes: Array<OpcodeMeta>;
 
   constructor(private hardwareService: HardwareService) { }
 
   ngOnInit() {
+    this.opcodes = this.hardwareService.getOpcodes();
   }
 
   getOpcodes(): Array<OpcodeMeta> {
-    const opcodes = this.hardwareService.getOpcodes();
+    return this.opcodes;
+  }
+
+  getFilteredOpcodes(): Array<OpcodeMeta> {
     if (this.filter !== '' ) {
-      return opcodes.filter((o) => o.name.toLowerCase().includes(this.filter.toLowerCase()));
+      return this.opcodes.filter((o) => o.name.toLowerCase().includes(this.filter.toLowerCase()));
     }
-    return opcodes;
+    return this.opcodes;
   }
 }

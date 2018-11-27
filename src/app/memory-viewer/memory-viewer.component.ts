@@ -26,6 +26,10 @@ export class MemoryViewerComponent implements OnInit {
                       .value === address;
   }
 
+  pcOnUnknownOpcode(address: number): boolean {
+    return this.isPC(address) &&  this.getMemory().find((m) => m.address === address).opcodeHumanReadable === 'UNKNOWN';
+  }
+
   getMemory(): mappedMemory {
     if (!this.followPC) {
       return this.hardwareService.getMemory(this.startAddress, this.endAddress);

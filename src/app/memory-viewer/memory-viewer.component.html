@@ -31,7 +31,7 @@
      <th> Dec </th>
      <th> Instruction </th>
    </tr>
-   <tr [ngClass]="{'success' : isPC(data.address)}" *ngFor="let data of getMemory()">
+   <tr [ngClass]="{'success' : isPC(data.address) && !pcOnUnknownOpcode(data.address), 'danger': pcOnUnknownOpcode(data.address)}" *ngFor="let data of getMemory()">
      <td> {{ data.address | hexPipe }} </td>
      <td> {{ data.value | hexPipe }} </td>
      <td> {{ data.value | binaryPipe }} </td>
@@ -48,7 +48,7 @@
     <th> Instruction </th>
     <th> Value </th>
   </tr>
-  <tr [ngClass]="{'success' : isPC(data.address)}" *ngFor="let data of memoryCopy">
+  <tr [ngClass]="{'success' : isPC(data.address) && !pcOnUnknownOpcode(data.address), 'danger': pcOnUnknownOpcode(data.address)}" *ngFor="let data of memoryCopy">
     <td> {{ data.address | hexPipe }} </td>
     <td> {{ data.value | hexPipe }} </td>
     <td> {{ data.value | binaryPipe }} </td>

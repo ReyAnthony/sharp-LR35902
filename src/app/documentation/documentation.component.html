@@ -1,6 +1,10 @@
 <h1> Opcodes documentation </h1>
-<label> Filter : </label>
-<input [(ngModel)]="filter" type="text"/> 
+
+<label> 
+    Filter : 
+    <input [(ngModel)]="filter" type="text"/> 
+</label>
+
 <div *ngFor="let opcode of getOpcodes()">
   <h2 id="{{opcode.code}}"> {{opcode.name}} </h2>
   <table class="table table-bordered">

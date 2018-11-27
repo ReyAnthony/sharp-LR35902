@@ -1,12 +1,14 @@
 <h1> Memory viewer </h1>
 <div>
   <div *ngIf="!memEdit">
-    <input type="checkbox" [(ngModel)]="followPC"/> 
-    <label> Follow PC ?  </label>
+    <label> 
+      <input type="checkbox" [(ngModel)]="followPC"/>  Follow PC ?  
+    </label>
   </div>
   <div>
-    <input type="checkbox" (click)="updateMem()" [(ngModel)]="memEdit"/> 
-    <label> Mem edit ? </label>
+    <label>  
+      <input type="checkbox" (click)="updateMem()" [(ngModel)]="memEdit"/>  Mem edit ? 
+    </label>
     <button *ngIf="memEdit" class="pull-right" (click)="saveMemEdits()"> Save edits </button>
   </div>
 </div>

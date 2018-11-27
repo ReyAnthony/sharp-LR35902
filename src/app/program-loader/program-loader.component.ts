@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HardwareService } from '../services/cpu/hardware.service';
 
 @Component({
   selector: 'app-program-loader',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProgramLoaderComponent implements OnInit {
 
-  constructor() { }
+  program: string;
+  constructor(private hardwareService: HardwareService) { }
 
   ngOnInit() {
   }
 
+  loadProgram() {
+    this.hardwareService.loadProgram(this.program.replace(/\s/g, '\n'));
+  }
 }

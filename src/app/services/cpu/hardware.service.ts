@@ -46,7 +46,6 @@ export class HardwareService {
   }
 
   loadTestProgram() {
-    this.reset();
     this.loadProgram(DEMO_PROGRAM);
   }
 
@@ -85,6 +84,7 @@ export class HardwareService {
   }
 
   loadProgram(program: string) {
+    this.reset();
     this.memory.loadProgram(program, this.cpu.pc);
   }
 

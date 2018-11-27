@@ -13,6 +13,15 @@ export class Opcode {
         return humanReadable;
     }
 }
+export interface OpcodeMeta {
+    code: OpCodes;
+    name: string;
+    params: number;
+    pcInc: number;
+    cycles: number;
+    template: string;
+    doc: string;
+}
 export enum OpCodes {
     NOP = 0x00,
     // Interrupts

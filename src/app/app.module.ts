@@ -10,6 +10,7 @@ import { BinaryPipe } from './misc/pipes/binaryPipe';
 import { MemoryViewerComponent } from './memory-viewer/memory-viewer.component';
 import { HexPipe } from './misc/pipes/hexPipe';
 import { ProgramLoaderComponent } from './program-loader/program-loader.component';
+import { DocumentationComponent } from './documentation/documentation.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { ProgramLoaderComponent } from './program-loader/program-loader.componen
     BinaryPipe,
     HexPipe,
     MemoryViewerComponent,
-    ProgramLoaderComponent
+    ProgramLoaderComponent,
+    DocumentationComponent
   ],
   imports: [
     BrowserModule,

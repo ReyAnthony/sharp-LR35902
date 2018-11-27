@@ -3,6 +3,7 @@ import { CPU } from './cpu/cpu';
 import { Memory } from './cpu/memory';
 import { delay } from 'q';
 import { OpCodeFetcher } from './cpu/opcode-fetcher';
+import { OpcodeMeta, Opcode } from './custom-types';
 
 const DEMO_PROGRAM = '0x0\n' +
      '0x3E\n' + '0x01\n'             // LD A, #01
@@ -107,7 +108,7 @@ export class HardwareService {
           value: value,
           opcodeHumanReadable: opcodeHumanReadable ? opcodeHumanReadable : 'UKNOWN'
         });
-        nextHumanReadable = currentAddress + (opcode.pcInc ? opcode.pcInc : 1);
+        nextHumanReadable = currentAddress + (opcode.parameters.length + 1 ? opcode.parameters.length + 1 : 1);
       } else {
         a.push({
           address: currentAddress,
@@ -139,5 +140,9 @@ export class HardwareService {
         {name: 'sp', value: this.cpu.sp},
         {name: 'pc', value: this.cpu.pc}
       ];
+  }
+
+  getOpcodes(): Array<OpcodeMeta> {
+    return this.opcodeFetcher.getOpcodes();
   }
 }

@@ -1,0 +1,29 @@
+<h1> Opcodes documentation </h1>
+<label> Filter : </label>
+<input [(ngModel)]="filter" type="text"/> 
+<div *ngFor="let opcode of getOpcodes()">
+  <h2 id="{{opcode.code}}"> {{opcode.name}} </h2>
+  <table class="table table-bordered">
+      <tr>
+        <th>Opcode</th>
+        <th>Parameters</th>
+        <th>Cycles</th>
+        <th>PC incrementation</th>
+      </tr>
+      <tr>
+        <td> {{opcode.code | hexPipe }} </td>
+        <td>{{opcode.params}}</td>
+        <td>{{opcode.cycles}}</td>
+        <td>{{opcode.pcInc}}</td>
+      </tr>
+    </table> 
+  <p> {{opcode.doc}} </p>
+  <p> Usage: {{opcode.template}}</p>
+  <br/>
+</div>
+
+<p *ngIf="getOpcodes().length === 0">
+    <br/>
+
+  Nothing to show ! Try using broader criterias. 
+</p>

@@ -1,8 +1,6 @@
-<div> 
-    <input type="number" [(ngModel)]="ms"/> 
-    <button (click)="setCpuMs()"> Set CPU cycle time in MS </button>
-</div>
-<button *ngIf="!isRunning()" (click)="loadTestProgram()" >Load test program</button>
+
+<input type="number" [(ngModel)]="ms"/> 
+<button (click)="setCpuMs()"> Set CPU cycle time in MS </button>
 <button *ngIf="!isRunning()" (click)="turnOn()"> Run </button>
 <button *ngIf="isRunning() && !isPaused()" (click)="pause()" >Pause</button>
 <button *ngIf="isRunning() && isPaused()" (click)="pause()" >Unpause</button>

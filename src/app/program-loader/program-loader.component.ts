@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HardwareService } from '../services/cpu/hardware.service';
 import { ProgramLoaderService } from '../services/program-loader.service';
+import { DEMO_PROGRAM } from '../services/cpu/custom-types';
 
 @Component({
   selector: 'app-program-loader',
@@ -12,6 +13,10 @@ export class ProgramLoaderComponent implements OnInit {
   constructor(private hardwareService: HardwareService, private programLoaderService: ProgramLoaderService) { }
 
   ngOnInit() {
+  }
+
+  fetchTestProgram() {
+    this.programLoaderService.program = DEMO_PROGRAM;
   }
 
   loadProgram() {

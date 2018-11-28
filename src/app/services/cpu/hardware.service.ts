@@ -88,7 +88,7 @@ export class HardwareService {
         a.push({
           address: currentAddress,
           value: value,
-          opcodeHumanReadable: opcodeHumanReadable ? opcodeHumanReadable : 'UNKNOWN'
+          opcodeHumanReadable: opcodeHumanReadable
         });
         nextHumanReadable = currentAddress + (opcode.parameters.length + 1 ? opcode.parameters.length + 1 : 1);
       } else {

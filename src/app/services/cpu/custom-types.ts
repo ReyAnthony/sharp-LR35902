@@ -31,11 +31,11 @@ export const DEMO_PROGRAM = '0x0\n' +
    + '0x13\n'                        // INC DE
    + '0x23\n'                        // INC HL
    + '0x33\n'                        // INC SP
-   + '0xC3\n' + '0x03 ' + '0x01\n'  // JP #0103 (Little Endian)
+   + '0xC3 ' + '0x03 ' + '0x01\n'  // JP #0103 (Little Endian)
    + '0x3D\n'                        // :x010F DEC A
    + '0xFE ' + '0x0\n'              // CP A, #00
    + '0xCA ' + '0x03 ' + '0x01\n'  // JP Z, #0103 (Little Endian)
-   + '0xC3 ' + '0x0F ' + '0x01\n'; // JP #010F (Little Endian)
+   + '0xC3 ' + '0x0F ' + '0x01'; // JP #010F (Little Endian)
 
 export enum OpCodes {
     NOP = 0x00,

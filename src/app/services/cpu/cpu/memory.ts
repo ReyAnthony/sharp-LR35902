@@ -1,13 +1,14 @@
+const _64KB_RAM = 0xFFFF;
+
 export class Memory {
 
     // TODO should be able to set banks (carts etc..)
     // TODO should use a virtual address space and split the memory according to the memory map
     // TODO Ideally this should be an interface so that the memory impl is irrelevent to the CPU etc...
     // eg. ROM can't be written etc..
-    private readonly _64KB_RAM: number = 0xFFFF;
     private memory: Array<number>;
 
-    constructor() {
+    constructor(private size: number = _64KB_RAM) {
         this.reset();
     }
 
@@ -22,7 +23,7 @@ export class Memory {
     }
 
     reset() {
-        this.memory = new Array(this._64KB_RAM);
+        this.memory = new Array(this.size);
     }
 
     loadProgram(program: string, loadAddress: number) {

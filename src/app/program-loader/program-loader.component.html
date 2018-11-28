@@ -1,6 +1,8 @@
 <div>
     <h1> Program loader </h1>
     <textarea rows="30" [(ngModel)]="programLoaderService.program" placeholder="Please insert space separated hex opcodes"></textarea>
+    <textarea rows="30" [ngModel]="getAsAsm()" disabled placeholder="Please load the program into memory"></textarea>
     <button (click)="loadProgram()"> Load program </button>
+    <button (click)="clear()"> Clear </button>
     <button (click)="fetchTestProgram()">Fetch test program</button>
 </div>

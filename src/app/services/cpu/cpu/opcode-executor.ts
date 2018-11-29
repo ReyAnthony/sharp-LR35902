@@ -22,25 +22,63 @@ export class OpCodeExecutor {
     }
 
     constructor(private registerHelper: RegisterHelper, private memory: Memory) {
-
+       const  _this = this;
         this.opcodeMap[OpCodes.NOP] = (opcodeParam: OpcodeParam) => {
             registerHelper.incrementPC(opcodeParam.pcInc);
             return opcodeParam.cycles;
         };
 
         // LD
-        this.opcodeMap[OpCodes.LDBN] = (opcodeParam: OpcodeParam) => {
+        function LD_N_with_NNREG(opcodeParam: OpcodeParam, registerValue: number): number {
             const destinationAddress = opcodeParam.parameters[0];
-            memory.setValueAtAdress(destinationAddress, registerHelper.getB());
+            memory.setValueAtAdress(destinationAddress, registerValue);
+            registerHelper.incrementPC(opcodeParam.pcInc);
+            return opcodeParam.cycles;
+        }
+
+        this.opcodeMap[OpCodes.LDAN] = (opcodeParam: OpcodeParam) => {
+            const destinationAddress = opcodeParam.parameters[0];
+            registerHelper.setA(memory.getValueAtAdress(destinationAddress));
             registerHelper.incrementPC(opcodeParam.pcInc);
             return opcodeParam.cycles;
         };
-        this.opcodeMap[OpCodes.LDA] = (opcodeParam: OpcodeParam) => {
-            const valueToStore = opcodeParam.parameters[0];
-            registerHelper.setA(valueToStore);
+        this.opcodeMap[OpCodes.LDBN] = (opcodeParam: OpcodeParam) => {
+            return LD_N_with_NNREG(opcodeParam, registerHelper.getB());
+        };
+        this.opcodeMap[OpCodes.LDCN] = (opcodeParam: OpcodeParam) => {
+            return LD_N_with_NNREG(opcodeParam, registerHelper.getC());
+        };
+        this.opcodeMap[OpCodes.LD_OFFSET_FF_CA] = (opcodeParam: OpcodeParam) => {
+            const A = registerHelper.getA();
+            const C = registerHelper.getC();
+            memory.setValueAtAdress(0xFF + C, A);
             registerHelper.incrementPC(opcodeParam.pcInc);
             return opcodeParam.cycles;
         };
+
+        function LD_NNREG_with_NN(opcodeParam: OpcodeParam, store: (valueToStore: number) => void): number {
+            const lsb = opcodeParam.parameters[0];
+            const msb = opcodeParam.parameters[1];
+            const val = _this.toLittleEndianByte(lsb, msb);
+            store(val);
+            registerHelper.incrementPC(opcodeParam.pcInc);
+            return opcodeParam.cycles;
+        }
+        this.opcodeMap[OpCodes.LDSPNN] = (opcodeParam: OpcodeParam) => {
+           return LD_NNREG_with_NN(opcodeParam, (val) => registerHelper.setSP(val));
+        };
+        this.opcodeMap[OpCodes.LDHLNN] = (opcodeParam: OpcodeParam) => {
+            return LD_NNREG_with_NN(opcodeParam, (val) => registerHelper.setHL(val));
+        };
+        this.opcodeMap[OpCodes.LDDHLA] = (opcodeParam: OpcodeParam) => {
+            const A = registerHelper.getA();
+            const HLAddr = registerHelper.getHL();
+            memory.setValueAtAdress(HLAddr, A);
+            registerHelper.decrementHL();
+            registerHelper.incrementPC(opcodeParam.pcInc);
+            return opcodeParam.cycles;
+        };
+
 
         // JP
         this.opcodeMap[OpCodes.JPNN] = (opcodeParam: OpcodeParam) => {
@@ -94,9 +132,19 @@ export class OpCodeExecutor {
             return opcodeParam.cycles;
         };
 
-        this.opcodeMap[OpCodes.JPZN] = (opcodeParam: OpcodeParam) => {
+        this.opcodeMap[OpCodes.JRZN] = (opcodeParam: OpcodeParam) => {
             const destinationAddress = opcodeParam.parameters[0];
             if (registerHelper.readZF() === 0b1) {
+                registerHelper.setPC(destinationAddress);
+            } else {
+                registerHelper.incrementPC(opcodeParam.pcInc);
+            }
+            return opcodeParam.cycles;
+        };
+
+        this.opcodeMap[OpCodes.JRNZN] = (opcodeParam: OpcodeParam) => {
+            const destinationAddress = opcodeParam.parameters[0];
+            if (registerHelper.readZF() === 0b0) {
                 registerHelper.setPC(destinationAddress);
             } else {
                 registerHelper.incrementPC(opcodeParam.pcInc);
@@ -126,6 +174,26 @@ export class OpCodeExecutor {
         };
 
         // INC
+        this.opcodeMap[OpCodes.INCA] = (opcodeParam: OpcodeParam) => {
+            registerHelper.incrementA();
+            const A = registerHelper.getA();
+            if (A === 0) {
+                registerHelper.setZF(1);
+            }
+            registerHelper.setN(0);
+            if (registerHelper.CY === 1) {
+                registerHelper.setH(1);
+            }
+            registerHelper.incrementPC(opcodeParam.pcInc);
+            return opcodeParam.cycles;
+        };
+        this.opcodeMap[OpCodes.INCC] = (opcodeParam: OpcodeParam) => {
+            registerHelper.incrementC();
+            registerHelper.incrementPC(opcodeParam.pcInc);
+            return opcodeParam.cycles;
+        };
+
+
         this.opcodeMap[OpCodes.INCBC] = (opcodeParam: OpcodeParam) => {
             registerHelper.incrementBC();
             registerHelper.incrementPC(opcodeParam.pcInc);
@@ -143,12 +211,6 @@ export class OpCodeExecutor {
         };
         this.opcodeMap[OpCodes.INCSP] = (opcodeParam: OpcodeParam) => {
             registerHelper.incrementSP();
-            registerHelper.incrementPC(opcodeParam.pcInc);
-            return opcodeParam.cycles;
-        };
-
-        this.opcodeMap[OpCodes.INCA] = (opcodeParam: OpcodeParam) => {
-            registerHelper.incrementA();
             registerHelper.incrementPC(opcodeParam.pcInc);
             return opcodeParam.cycles;
         };
@@ -177,6 +239,34 @@ export class OpCodeExecutor {
 
         this.opcodeMap[OpCodes.DECA] = (opcodeParam: OpcodeParam) => {
             registerHelper.decrementA();
+            registerHelper.incrementPC(opcodeParam.pcInc);
+            return opcodeParam.cycles;
+        };
+
+        // tslint:disable:no-bitwise
+        // BITOPS
+        this.opcodeMap[OpCodes.XORA] = (opcodeParam: OpcodeParam) => {
+            let A  = registerHelper.getA();
+            A = A ^ A;
+            registerHelper.setA(A);
+            if (A === 0) {
+                registerHelper.setZF(1);
+            }
+            registerHelper.setCY(0);
+            registerHelper.setN(0);
+            registerHelper.setH(0);
+            registerHelper.incrementPC(opcodeParam.pcInc);
+            return opcodeParam.cycles;
+        };
+
+        // prefix opcode
+        this.opcodeMap[OpCodes.BITBH] = (opcodeParam: OpcodeParam) => {
+            const H = registerHelper.readBit(registerHelper.getH(), 7);
+            if (H === 0) {
+                registerHelper.setZF(1);
+            }
+            registerHelper.setN(0);
+            registerHelper.setH(1);
             registerHelper.incrementPC(opcodeParam.pcInc);
             return opcodeParam.cycles;
         };

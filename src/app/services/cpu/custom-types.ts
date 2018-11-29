@@ -1,7 +1,7 @@
 export type bit = 0|1;
 export class Opcode {
     constructor(public opcode: number, public parameters: Array<number>,
-                public pcInc: number, public cycles: number,
+                public pcInc: number, public cycles: number, public opcodeBytes,
                 private template: string) {}
 
     getOpcodeHumanReadable(): string {
@@ -12,6 +12,11 @@ export class Opcode {
         }
         return humanReadable;
     }
+
+    getOpcodeTotalLength(): number {
+        const length = this.parameters.length + this.opcodeBytes;
+        return length > 0 ? length : 1;
+    }
 }
 export interface OpcodeMeta {
     code: OpCodes;
@@ -21,6 +26,7 @@ export interface OpcodeMeta {
     cycles: number;
     template: string;
     doc: string;
+    opcodeBytes: number;
 }
 
 export const DEMO_PROGRAM = '0x0\n' +
@@ -45,10 +51,16 @@ export enum OpCodes {
     // CP
     CPA = 0xFE,
     // LD
+    LDAN = 0x3E,
     LDBN = 0x06,
-    LDA = 0x3E,
+    LDCN = 0x0E,
+    LD_OFFSET_FF_CA = 0xE2,
+    LDSPNN = 0x31,
+    LDHLNN = 0x21,
+    LDDHLA = 0x32,
     // INC
     INCA = 0x3C,
+    INCC = 0x0C,
     INCBC = 0x03,
     INCDE = 0x13,
     INCHL = 0x23,
@@ -61,9 +73,18 @@ export enum OpCodes {
     DECSP = 0x3B,
 
     JPNN = 0xC3,
-    JPZN = 0x20,
     JPZNN = 0xCA,
     JPNZNN = 0xC2,
     JPNCNN = 0xD2,
-    JPCNN = 0xDA
+    JPCNN = 0xDA,
+
+    JRZN = 0x28,
+    JRNZN = 0x20,
+
+    // BITOPS
+    XORA = 0xAF,
+
+    // PREFIX
+    PREFIX = 0xCB,
+    BITBH = 0xCB7C
 }

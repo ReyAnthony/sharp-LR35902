@@ -90,7 +90,7 @@ export class HardwareService {
           value: value,
           opcodeHumanReadable: opcodeHumanReadable
         });
-        nextHumanReadable = currentAddress + (opcode.parameters.length + 1 ? opcode.parameters.length + 1 : 1);
+        nextHumanReadable = currentAddress + opcode.getOpcodeTotalLength();
       } else {
         a.push({
           address: currentAddress,

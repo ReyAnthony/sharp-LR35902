@@ -4,7 +4,6 @@ import { ProgramLoaderService } from '../services/program-loader.service';
 import { DEMO_PROGRAM } from '../services/cpu/custom-types';
 import { Memory } from '../services/cpu/cpu/memory';
 import { OpCodeFetcher } from '../services/cpu/cpu/opcode-fetcher';
-import { DocumentationService } from '../services/documentation.service';
 
 @Component({
   selector: 'app-program-loader',
@@ -45,7 +44,7 @@ export class ProgramLoaderComponent implements OnInit {
       const opcode = opcodeFetcher.fetchOpcode(currentAddress);
       const opcodeHumanReadable = opcode.getOpcodeHumanReadable();
       opcodeHumanReadable !== 'UNKNOWN' ?  str += opcodeHumanReadable + '\n' :  str += '--\n';
-      currentAddress = currentAddress + (opcode.parameters.length > 0 ? opcode.parameters.length + 1 : 1);
+      currentAddress = currentAddress + opcode.getOpcodeTotalLength();
     }
     return str;
   }

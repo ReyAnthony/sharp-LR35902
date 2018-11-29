@@ -12,6 +12,7 @@
   <table class="table table-bordered">
       <tr>
         <th>Opcode</th>
+        <th>Opcode size</th>
         <th>Template</th>
         <th>Parameters</th>
         <th>Cycles</th>
@@ -19,6 +20,7 @@
       </tr>
       <tr>
         <td> {{opcode.code | hexPipe }} </td>
+        <td> {{opcode.opcodeBytes}} </td>
         <td>{{opcode.template}}</td>
         <td>{{opcode.params}}</td>
         <td>{{opcode.cycles}}</td>

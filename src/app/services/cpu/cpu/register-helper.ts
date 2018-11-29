@@ -49,6 +49,11 @@ export class RegisterHelper {
         this.cpu.af = this.setHigherByte(this.cpu.af, value);
     }
 
+    // registers
+    setC(value: number) {
+        this.cpu.bc = this.setHigherByte(this.cpu.bc, value);
+    }
+
     getA(): number {
         return this.getHigherByte(this.cpu.af);
     }
@@ -71,6 +76,14 @@ export class RegisterHelper {
 
     getF(): number {
         return this.getLowerByte(this.cpu.af);
+    }
+
+    getHL(): number {
+        return this.cpu.hl;
+    }
+
+    getH(): number {
+        return this.getHigherByte(this.cpu.hl);
     }
 
     // INC
@@ -114,6 +127,15 @@ export class RegisterHelper {
        }
     }
 
+    incrementC() {
+        const C = this.getC() + 1;
+        if (C > 0xFF) {
+            this.setC(0);
+        } else {
+            this.setC(C);
+        }
+     }
+
 
     // DEC
     decrementBC() {
@@ -152,6 +174,14 @@ export class RegisterHelper {
 
     setPC(address: number) {
         this.cpu.pc = address;
+    }
+
+    setSP(address: number) {
+        this.cpu.sp = address;
+    }
+
+    setHL(address: number) {
+        this.cpu.hl = address;
     }
 
     // Helper functions

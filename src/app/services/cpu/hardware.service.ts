@@ -21,7 +21,7 @@ export class HardwareService {
   constructor() {
     this.memory = new Memory();
     this.opcodeFetcher = new OpCodeFetcher(this.memory);
-    this.cpu = new CPU(this.memory, this.opcodeFetcher);
+    this.cpu = new CPU(this.opcodeFetcher);
   }
 
   isRunning(): boolean {

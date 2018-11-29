@@ -18,6 +18,8 @@ export class Opcode {
         return length > 0 ? length : 1;
     }
 }
+
+// TODO do not expose opcode meta
 export interface OpcodeMeta {
     code: OpCodes;
     name: string;
@@ -27,6 +29,7 @@ export interface OpcodeMeta {
     template: string;
     doc: string;
     opcodeBytes: number;
+    execute: (OpcodeParam, RegisterHelper) => number;
 }
 
 export const DEMO_PROGRAM = '0x0\n' +

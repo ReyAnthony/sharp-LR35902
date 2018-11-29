@@ -1,5 +1,4 @@
 import { RegisterHelper } from './register-helper';
-import { OpCodeExecutor } from './opcode-executor';
 import { Memory } from './memory';
 import { delay } from 'q';
 import { Opcode } from '../custom-types';
@@ -29,7 +28,6 @@ export class CPU {
     private readonly SP_INIT = 0xFFFE;
 
     private registerHelper: RegisterHelper;
-    private opcodeExecutor: OpCodeExecutor;
 
     private cpuStepMS = 5;
     af: number;
@@ -63,10 +61,9 @@ export class CPU {
         return this.registerHelper.getE();
     }
 
-    constructor(private memory: Memory, private opcodeFetcher: OpCodeFetcher) {
+    constructor(private opcodeFetcher: OpCodeFetcher) {
         this.reset();
         this.registerHelper = new RegisterHelper(this);
-        this.opcodeExecutor = new OpCodeExecutor(this.registerHelper, this.memory);
     }
 
     reset() {
@@ -80,7 +77,7 @@ export class CPU {
 
     step(): Q.Promise<void> {
         const opcode: Opcode = this.opcodeFetcher.fetchOpcode(this.pc);
-        const cpuCyclesTaken: number = this.opcodeExecutor.executeOpCode(opcode);
+        const cpuCyclesTaken: number = this.opcodeFetcher.executeOpCode(opcode, this.registerHelper);
         const _delay = cpuCyclesTaken * this.cpuStepMS;
         return delay(_delay);
     }

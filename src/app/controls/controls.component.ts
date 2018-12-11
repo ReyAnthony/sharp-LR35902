@@ -31,10 +31,6 @@ export class ControlsComponent implements OnInit {
     this.hardwareService.reset();
   }
 
-  loadTestProgram() {
-    this.hardwareService.loadTestProgram();
-  }
-
   isPaused(): boolean {
     return this.hardwareService.isPaused();
   }

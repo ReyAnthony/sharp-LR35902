@@ -1,0 +1,26 @@
+language: node_js
+node_js:
+  - "9"
+dist: trusty
+sudo: false
+
+branches:
+  only:
+  - master
+
+cache:
+  directories:
+    - node_modules
+
+install:
+  - npm install
+
+script:
+  - ng build --base-href "https://reyanthony.github.io/sharp-z80-LR35902/"
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  local_dir: dist/emulator-gb
+  on:
+    branch: master

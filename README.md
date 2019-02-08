@@ -1,6 +1,6 @@
 # EmulatorGb
 
-This project is supposed to be a gameboy emulator, but for now, it strives to emulate the sharp-z80-LR35902.
+This project is supposed to be a gameboy emulator, but for now, it strives to emulate the sharp-LR35902 (kinda z80 flavored).
 
 It somewhat does, but most opcodes still need to be added.
 

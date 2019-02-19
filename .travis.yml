@@ -16,7 +16,7 @@ install:
   - npm install
 
 script:
-  - ng build --base-href "https://reyanthony.github.io/sharp-z80-LR35902/"
+  - ng build --base-href "https://reyanthony.github.io/sharp-LR35902/"
 deploy:
   provider: pages
   skip_cleanup: true

@@ -4,11 +4,11 @@ This project is supposed to be a gameboy emulator, but for now, it strives to em
 
 It somewhat does, but most opcodes still need to be added.
 
-![Build status of the master branch](https://travis-ci.org/ReyAnthony/sharp-z80-LR35902.svg?branch=master)
+![Build status of the master branch](https://travis-ci.org/ReyAnthony/sharp-LR35902.svg?branch=master)
 
-[Live demo](https://reyanthony.github.io/sharp-z80-LR35902/)
+[Live demo](https://reyanthony.github.io/sharp-LR35902/)
 
-[CI](https://travis-ci.org/ReyAnthony/sharp-z80-LR35902)
+[CI](https://travis-ci.org/ReyAnthony/sharp-LR35902)
 
 
 ## Stuff to run the project
